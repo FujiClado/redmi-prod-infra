@@ -38,3 +38,20 @@ variable "project_owner" {
   default     = "abin"
 
 }
+
+
+variable "hosted_zone_name" {
+
+  type        = string
+  description = "domain name"
+  default     = "jijinmichael.online"
+
+}
+
+variable "hostanme" {
+
+  type        = string
+  description = "hostname"
+  default     = "terraform"
+
+}

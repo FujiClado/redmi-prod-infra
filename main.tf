@@ -122,4 +122,18 @@ resource "aws_instance" "frontend" {
   }
 }
 
+# -----------------------------------------------------
+# Creating Record
+# -----------------------------------------------------
+
+
+resource "aws_route53_record" "frontend" {
+
+  zone_id = data.aws_route53_zone.official.id
+  name    = "${var.hostanme}.${var.hosted_zone_name}"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.frontend.public_ip]
+}
+
 
