@@ -123,9 +123,24 @@ resource "aws_instance" "frontend" {
 }
 
 # -----------------------------------------------------
-# Creating Record
+# Elastic For Ec2 Instance
 # -----------------------------------------------------
 
+resource "aws_eip" "frontend" {
+  instance = aws_instance.frontend.id
+  domain   = "vpc"
+  tags = {
+    Name    = "${var.project_name}-${var.project_env}-frontend"
+    project = var.project_name
+    env     = var.project_env
+    owner   = var.project_owner
+  }
+}
+
+
+# -----------------------------------------------------
+# Creating Record
+# -----------------------------------------------------
 
 resource "aws_route53_record" "frontend" {
 
@@ -133,7 +148,5 @@ resource "aws_route53_record" "frontend" {
   name    = "${var.hostanme}.${var.hosted_zone_name}"
   type    = "A"
   ttl     = 300
-  records = [aws_instance.frontend.public_ip]
+  records = [aws_eip.frontend.public_ip]
 }
-
-
